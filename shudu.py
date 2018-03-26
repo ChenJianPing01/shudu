@@ -269,7 +269,7 @@ class ShuDu(object):
             __crack()
         #'''    
         endcount = self.numcount()
-        print('{:4d} 初始：{:2d}个，填入：{:2d}个，最终：{:2d}个，crack填入：{:2d}个'.format(
+        print('{:4d} first: {:2d}, fillin: {:2d}, last: {:2d}, crackin: {:2d}'.format(
                 self.no, firstcount, endcount - firstcount, endcount, count))
         #'''    
                 
@@ -286,27 +286,22 @@ class ShuDu(object):
                     for rcb_seat in self.rcb_seats]) == 9 * 27
         
         
-class ShuDus(object):
-
-    def __init__(self, filename):
-        no_numses = re.findall('(\d+),{9}\n' + (',(\d?)'*9 + '\n') * 9,
-                    open(filename).read())
-        self.shudus = [ShuDu(no_nums) for no_nums in no_numses]
-        with open(filename[:-4] + '.txt', 'w') as fileobj:
-            fileobj.write(str(self))
- 
-    def __str__(self):
-        return ''.join([str(shudu) for shudu in self.shudus])        
+def ShuDus(filename):
+    no_numses = re.findall('(\d+),{9}\n' + (',(\d?)'*9 + '\n') * 9,
+                open(filename).read())
+    shudus = [ShuDu(no_nums) for no_nums in no_numses]
+    with open(filename[:-4] + '.txt', 'w') as fileobj:
+        fileobj.write(''.join([str(shudu) for shudu in shudus])) 
             
     
 if __name__ == '__main__':
     import time
     start = time.time()
     
-    ShuDus('c:\\cc\\shudu.csv') 
+    ShuDus('shudu.csv')
     
     end = time.time()
-    print('用时: {0:6.3f} 秒'.format(end - start))
+    print('use: {0:6.3f}s'.format(end - start))
     
     
 #
